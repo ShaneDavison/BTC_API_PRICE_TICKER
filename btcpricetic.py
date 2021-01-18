@@ -2,12 +2,9 @@ import requests
 import time
 from datetime import datetime
 
-BITCOIN_PRICE_THRESHOLD = float(input('what is your price threshold?'))
-percentage_change = float(input('what percentage change ?'))
 
-percentage_value =( BITCOIN_PRICE_THRESHOLD / 100 ) * percentage_change
 
-print(percentage_value00)
+
 
 
 bitcoin_api_url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
@@ -18,8 +15,16 @@ def get_latest_bitcoin_price():
     response_json  = response.json()
     return float(response_json['bitcoin']['usd'])
 
+# BITCOIN_PRICE_THRESHOLD = get_latest_bitcoin_price()
+BITCOIN_PRICE_THRESHOLD = 40000
 
 
+percentage_change = float(input('what percentage change do you want an alert'
+                                '?'))
+
+percentage_value =( BITCOIN_PRICE_THRESHOLD / 100 ) * percentage_change
+
+print(str('when the price drops by ') + str(percentage_value) + str(' you will get an alert'))
 
 
 def post_ifttt_webhook(event, value):
@@ -57,10 +62,11 @@ def main():
     while True:
         price = get_latest_bitcoin_price()
         date = datetime.now()
-        bitcopin_history.apend({'date': date, 'price': price})
+        bitcoin_history.append({'date': date, 'price': price})
 
         # Send an emergency notification
-        if price <  (BITCOIN_PRICE_THRESHOLD)  :
+        if price <=  BITCOIN_PRICE_THRESHOLD - percentage_value:
+
             post_ifttt_webhook('bitcoin_price_emergency', price)
 
         # Send a Telegram notification
