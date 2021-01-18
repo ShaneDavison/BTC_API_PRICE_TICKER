@@ -2,7 +2,13 @@ import requests
 import time
 from datetime import datetime
 
-BITCOIN_PRICE_THRESHOLD = float(36000)
+BITCOIN_PRICE_THRESHOLD = float(input('what is your price threshold?'))
+percentage_change = float(input('what percentage change ?'))
+
+percentage_value =( BITCOIN_PRICE_THRESHOLD / 100 ) * percentage_change
+
+print(percentage_value00)
+
 
 bitcoin_api_url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
 IFTTT_WEBHOOKS_URL = 'https://maker.ifttt.com/trigger/{}/with/key/glYhDZin0pvxxGJNr7GwSarDPpATCaOa7eTYJAQkR97'
@@ -45,15 +51,16 @@ def format_bitcoin_history(bitcoin_history):
     return '<br>'.join(rows)
 
 
+
 def main():
     bitcoin_history = []
     while True:
         price = get_latest_bitcoin_price()
         date = datetime.now()
-        bitcoin_history.append({'date': date, 'price': price})
+        bitcopin_history.apend({'date': date, 'price': price})
 
         # Send an emergency notification
-        if price < BITCOIN_PRICE_THRESHOLD:
+        if price <  (BITCOIN_PRICE_THRESHOLD)  :
             post_ifttt_webhook('bitcoin_price_emergency', price)
 
         # Send a Telegram notification
