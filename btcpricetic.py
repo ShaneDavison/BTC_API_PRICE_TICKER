@@ -24,7 +24,8 @@ percentage_change = float(input('what percentage change do you want an alert'
 
 percentage_value =( BITCOIN_PRICE_THRESHOLD / 100 ) * percentage_change
 
-print(str('when the price drops by ') + str(percentage_value) + str(' you will get an alert'))
+print (str('BTC price at time of setting up alert ') + (str(BITCOIN_PRICE_THRESHOLD)))
+print(str('when the price drops by ') + str(percentage_value) + str(' to a value of ') + str(BITCOIN_PRICE_THRESHOLD - percentage_value) + str(' you will get an alert'))
 
 
 def post_ifttt_webhook(event, value):
